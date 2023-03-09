@@ -19,6 +19,7 @@ class Rabbit(pygame.sprite.Sprite):
         self.rect.y = coordonnee[1] - 15
 
         self.position = pygame.math.Vector2(self.rect.x, self.rect.y)
+        self.direction = pygame.math.Vector2(self.rect.x, self.rect.y)
 
 
     def remove(self):
@@ -48,11 +49,30 @@ class Rabbit(pygame.sprite.Sprite):
                     self.position += direction.normalize() * self.vitesse
                     self.rect.x = round(self.position.x)
                     self.rect.y = round(self.position.y)
+                else:
+                    self.deplacementRandom()
+            else: 
+                self.deplacementRandom()
 
         else: # si le lapin est en colision avec un loup il meurt
             self.remove()
 
 
+    def deplacementRandom(self):
+        """ Permet un deplacement au hasard """
+        initR = random.randint(0, 5)
+
+        if initR == 0:
+            self.direction = pygame.math.Vector2((random.randint(0,1000), random.randint(0,600))) - self.position # direction au hasard
+
+        self.position += self.direction.normalize() * (self.vitesse / 2) # on veux qu'il se deplace moins vite
+        self.rect.x = round(self.position.x)
+        self.rect.y = round(self.position.y)
+
+
     def mange(self):
         """ Le lapin se reproduit """
         self.game.ajout_lapin((self.rect.x, self.rect.y))
+
+
+
