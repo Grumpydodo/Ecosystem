@@ -14,10 +14,12 @@ class Food(pygame.sprite.Sprite):
 
 
     def remove(self):
+        """ Supprime food de la simulation"""
         self.game.all_food.remove(self)
 
     
     def deplacement(self):
-        for lapin in self.game.check_collision(self, self.game.all_rabbit):
-            lapin.mange()
-            self.remove()
+        """ Permet de vérifier si un lapin rentre en contact et de supprimer la nourriture dans ce cas"""
+        for lapin in self.game.check_collision(self, self.game.all_rabbit): # Vérif si en colision avec un lapin
+            lapin.mange() # fait apparaitre le lapin 
+            self.remove() # Supprime la nourriture de la simulation

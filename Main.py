@@ -91,23 +91,23 @@ while True:
             #on recupere la position du clic
             position_clic = pygame.mouse.get_pos() 
             
-            if rabbit_button_rect.collidepoint(position_clic):
+            if rabbit_button_rect.collidepoint(position_clic): # spawner lapin selectionner 
                 game.spawner = 0
             
-            elif wolf_button_rect.collidepoint(position_clic):
+            elif wolf_button_rect.collidepoint(position_clic): # spawner loup selectionner
                 game.spawner = 1
 
-            elif food_button_rect.collidepoint(position_clic):
+            elif food_button_rect.collidepoint(position_clic): # spawner food selectionner
                 game.spawner = 2
 
             else:
-                if game.spawner == 0:
+                if game.spawner == 0: # ajoute un lapin a l'emplacement du clic
                     game.ajout_lapin(position_clic)
                 
-                elif game.spawner == 1:
+                elif game.spawner == 1: # ajoute un loup a l'emplacement du clic
                     game.ajout_loup(position_clic)
                 
-                elif game.spawner == 2:
+                elif game.spawner == 2: # ajoute un nourriture a l'emplacement du clic
                     game.ajout_food(position_clic)
-    clock.tick(FPS)
+    clock.tick(FPS) # fixe la vitesse de la simulation 
 
