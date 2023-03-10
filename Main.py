@@ -17,6 +17,12 @@ ecran = pygame.display.set_mode((1080, 650))
 fondEcran = pygame.image.load('images/grass.jpg')
 fondEcran = pygame.transform.scale(fondEcran, (1080,650))
 
+
+# Pour ajouter le bois pour le menu
+woodMenu = pygame.image.load('images/wood.png')
+woodMenu = pygame.transform.scale(woodMenu , (300, 650))
+
+
 #Bouton pour selectionner le spawn des loups
 wolf_button = pygame.image.load('images/icon_wolf.png')
 wolf_button = pygame.transform.scale(wolf_button, (50,50))
@@ -45,6 +51,10 @@ while True:
 
     #appliquer le fond d'écran
     ecran.blit(fondEcran, (0,0))
+
+
+    #appliquer le fond d'écran pour le menu
+    ecran.blit(woodMenu, (900, 0))
 
     # ajoute les boutons a l'écran
     ecran.blit(wolf_button, wolf_button_rect)
@@ -109,5 +119,6 @@ while True:
                 
                 elif game.spawner == 2: # ajoute un nourriture a l'emplacement du clic
                     game.ajout_food(position_clic)
+
     clock.tick(FPS) # fixe la vitesse de la simulation 
 

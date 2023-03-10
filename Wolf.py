@@ -32,26 +32,25 @@ class Wolf(pygame.sprite.Sprite):
         """ Renvoie la distance ainsi que les coordonnées du lapin le plus proche """
         distance_min = None
         pos_min = None
-        for lapin in self.game.all_rabbit: # Parcours tout lapin dans la simulation 
-            distance = math.dist((self.rect.x, self.rect.y), (lapin.rect.x, lapin.rect.y)) # Calcul la distance
-            if distance_min == None or distance < distance_min: # Vérif si plus proche
-                distance_min = distance
-                pos_min = (lapin.rect.x, lapin.rect.y)
+        if self.game.all_rabbit: # Vérif si il y a un lapin dans la simulation 
+            for lapin in self.game.all_rabbit: # Parcours tout lapin dans la simulation 
+                distance = math.dist((self.rect.x, self.rect.y), (lapin.rect.x, lapin.rect.y)) # Calcul la distance
+                if distance_min == None or distance < distance_min: # Vérif si plus proche
+                    distance_min = distance
+                    pos_min = (lapin.rect.x, lapin.rect.y)
         return (distance_min, pos_min)
 
     
     def deplacement(self):
         """ Permet le déplacement du loup """
+        self.horsMap() # Vérif si hors de la map
         if not self.game.check_collision(self, self.game.all_rabbit):
-            if self.game.all_rabbit: # Vérif si il y a au moins un lapin dans la simulation
-                distance, position = self.get_nearest_rabbit() # Récupére distance | position plus proche lapin
-                if distance < 200: # Le loup ne s'y approche que a partir d'une certaine distance
-                    self.direction = pygame.math.Vector2(position) - self.position
-                    self.position += self.direction.normalize() * self.vitesse
-                    self.rect.x = round(self.position.x)
-                    self.rect.y = round(self.position.y)
-                else:
-                    self.deplacementRandom()
+            distance, position = self.get_nearest_rabbit() # Récupére distance | position plus proche lapin
+            if distance != None and distance < 200: # Le loup ne s'y approche que a partir d'une certaine distance
+                self.direction = pygame.math.Vector2(position) - self.position
+                self.position += self.direction.normalize() * self.vitesse
+                self.rect.x = round(self.position.x)
+                self.rect.y = round(self.position.y)
             else:
                 self.deplacementRandom()
 
@@ -63,6 +62,14 @@ class Wolf(pygame.sprite.Sprite):
         if initR == 0:
             self.direction = pygame.math.Vector2((random.randint(0,1000), random.randint(0,600))) - self.position # direction au hasard
 
-        self.position += self.direction.normalize() * (self.vitesse / 2) # on veux qu'il se deplace moins vite
+        self.position += self.direction.normalize() * (self.vitesse / 3) # on veux qu'il se deplace moins vite
         self.rect.x = round(self.position.x)
         self.rect.y = round(self.position.y)
+
+
+    def horsMap(self):
+        """ Vérifie si l'object est toujours dans la map ou si il en est sortie
+        si il est sortie le supprime"""
+        if self.rect.y < 0 or self.rect.y > 650 or self.rect.x < 0 or self.rect.x > 950:
+            self.remove()
+            

@@ -41,6 +41,7 @@ class Rabbit(pygame.sprite.Sprite):
 
     def deplacement(self):
         """Permet le déplacement d'un lapin """
+        self.horsMap()
         if not self.game.check_collision(self, self.game.all_wolf): # Vérif si en collision avec un loup
             if self.game.all_food: # Vérif si il y a de la nourriture dans la simlation 
                 distance, position = self.get_nearest_food() # recupere distance et position food plus proche
@@ -65,7 +66,7 @@ class Rabbit(pygame.sprite.Sprite):
         if initR == 0:
             self.direction = pygame.math.Vector2((random.randint(0,1000), random.randint(0,600))) - self.position # direction au hasard
 
-        self.position += self.direction.normalize() * (self.vitesse / 2) # on veux qu'il se deplace moins vite
+        self.position += self.direction.normalize() * (self.vitesse / 3) # on veux qu'il se deplace moins vite
         self.rect.x = round(self.position.x)
         self.rect.y = round(self.position.y)
 
@@ -74,5 +75,9 @@ class Rabbit(pygame.sprite.Sprite):
         """ Le lapin se reproduit """
         self.game.ajout_lapin((self.rect.x, self.rect.y))
 
-
-
+        
+    def horsMap(self):
+        """ Vérifie si l'object est toujours dans la map ou si il en est sortie
+        si il est sortie le supprime"""
+        if self.rect.y < 0 or self.rect.y > 650 or self.rect.x < 0 or self.rect.x > 950:
+            self.remove()
