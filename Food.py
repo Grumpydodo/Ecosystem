@@ -20,6 +20,14 @@ class Food(pygame.sprite.Sprite):
     
     def deplacement(self):
         """ Permet de vérifier si un lapin rentre en contact et de supprimer la nourriture dans ce cas"""
+        self.horsMap()
         for lapin in self.game.check_collision(self, self.game.all_rabbit): # Vérif si en colision avec un lapin
             lapin.mange() # fait apparaitre le lapin 
             self.remove() # Supprime la nourriture de la simulation
+
+
+    def horsMap(self):
+        """ Vérifie si l'object est toujours dans la map ou si il en est sortie
+        si il est sortie le supprime"""
+        if self.rect.y < 0 or self.rect.y > 650 or self.rect.x < 0 or self.rect.x > 950:
+            self.remove()

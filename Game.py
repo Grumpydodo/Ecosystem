@@ -28,6 +28,7 @@ class Game:
         """ Permet de faire apparaitre un loup"""
         self.all_wolf.add(Wolf(coordonnee, self))
 
+
     def ajout_food(self, coordonnee):
         """ Permet de faire apparaitre de la nourriture"""
         self.all_food.add(Food(coordonnee, self))
